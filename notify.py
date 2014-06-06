@@ -24,7 +24,7 @@ Receiver = Config.get("Mail", "receiver");
 Server = Config.get("Mail", "smtp");
 
 def getContent(name, status):
-   message  = "From: CouchPotato Afterburn <%s><br />\r\n" % From
+   message  = "From: uTorrent Afterburn <%s><br />\r\n" % From
    message += "To: %s <%s>\r\n" % (rName, Receiver)
    message += "MIME-Version: 1.0\r\n"
    message += "Content-type: text/html\r\n"
@@ -33,7 +33,7 @@ def getContent(name, status):
    message += "Status: %s<br />\r\n" % status
    message += "<br />\r\n"
    message += "Greets,<br />\r\n"
-   message += "Potato"
+   message += "Afterbrun"
    return message
 
 def removeTorrent(hash):
