@@ -17,13 +17,16 @@ fconf = os.path.join(base_path, 'settings.conf')
 Config = ConfigParser.ConfigParser()
 Config.read(fconf)
 
-doMail = Config.get("Mail", "notice");
-rName = Config.get("Mail", "name");
-From = Config.get("Mail", "from");
+doMail   = Config.get("Mail", "notice");
+rName    = Config.get("Mail", "name");
+From     = Config.get("Mail", "from");
 Receiver = Config.get("Mail", "receiver");
-Server = Config.get("Mail", "smtp");
+Server   = Config.get("Mail", "smtp");
 SmtpUser = Config.get("Mail", "username");
 SmtpPass = Config.get("Mail", "password");
+bRemove  = Config.get("uTorrent", "remove");
+uHost    = Config.get("uTorrent", "host");
+uPort    = Config.get("uTorrent", "port");
 
 def getContent(name, status):
    message  = "From: uTorrent Afterburn <%s><br />\r\n" % From
@@ -39,8 +42,9 @@ def getContent(name, status):
    return message
 
 def removeTorrent(hash):
-   ut = UTorrentClient('localhost', '8080')
-   ut.remove(hash)
+    if bRemove == 'true':
+       ut = UTorrentClient(uHost, uPort)
+       ut.remove(hash)
 
 def sendMail(f, r, m, s):
    if doMail == 'true':
