@@ -22,6 +22,8 @@ rName = Config.get("Mail", "name");
 From = Config.get("Mail", "from");
 Receiver = Config.get("Mail", "receiver");
 Server = Config.get("Mail", "smtp");
+SmtpUser = Config.get("Mail", "username");
+SmtpPass = Config.get("Mail", "password");
 
 def getContent(name, status):
    message  = "From: uTorrent Afterburn <%s><br />\r\n" % From
@@ -33,7 +35,7 @@ def getContent(name, status):
    message += "Status: %s<br />\r\n" % status
    message += "<br />\r\n"
    message += "Greets,<br />\r\n"
-   message += "Afterbrun"
+   message += "uTorrent Afterburn"
    return message
 
 def removeTorrent(hash):
@@ -44,8 +46,13 @@ def sendMail(f, r, m, s):
    if doMail == 'true':
       try:
          smtpObj = smtplib.SMTP(s)
+         smtpObj.ehlo()
+         smtpObj.starttls()
+         smtpObj.ehlo()
+         smtpObj.login(SmtpUser, SmtpPass)
          smtpObj.sendmail(f, r, m)         
          print "Successfully sent email"
+         smtpObj.close()
       except SMTPException:
          print "Error: unable to send email"
 
